@@ -2,7 +2,7 @@ import requests
 import json
 
 host = "https://192.168.0.117"
-cookies = "Leaderboard=close; Announcements=close; Activity=close; Game Clock=close; Filter=close; Teams=open; dysnar=open; FBCTF=c5334dfd9004e5e03e4db694e6581b74"
+cookies = "Teams=close; Leaderboard=close; Announcements=close; Activity=close; Filter=close; Game Clock=close; FBCTF=129f54b3568b7b59a50e42bd8b7477ae"
 verify = False
 output_dir = "grabbed"
 
@@ -15,6 +15,9 @@ def main():
 
     # Get tasks
     country_data = session.get(host + "/data/country-data.php", verify=verify)
+    if country_data.status_code != 200:
+        print "Bad cookies"
+        exit()
     country_data = json.loads(country_data.text)
     file(output_dir + "/tasks.json", 'w').write(json.dumps(country_data))
 

@@ -64,8 +64,7 @@ def main():
     # Upload new tasks
     for i in challenges.keys():
         if i in existing_tasks:
-            #continue
-            pass
+            continue
         # Create new task
         cdata = challenges[i]
         new_task = {"challenge": {

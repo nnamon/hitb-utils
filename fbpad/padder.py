@@ -1,13 +1,14 @@
 import requests
 import json
 import urllib
+import os
 
 host = "https://pad.spro.ink"
 apikey = "7e5b927d259e3f97235ec1418f9bcd3efe6737a8121d2fa3e2f331d277185c6c"
 verify = False
 header = {"X-Apikey": apikey}
 input_dir = "grabbed"
-ctf_id = 8
+ctf_id = 11
 e_apikey = "ecb17837c120b101fad678e9718721967596eed77fb1a46a9ecb1b5da3d0ddfe"
 e_host = "https://pad.spro.ink:1235"
 e_cookies = "ctfpad_hide=false; ctfpad=1be6aa4e60aac96b19cb2adaabca1c74; language=en-gb; express_sid=s%3AEOko2ot1sUnNANBb_5F7bJO2CeB_UEDs.IHxjUjjmgK607208vaI8Y%2BT0MTOeFhL7g%2FAIKZkHM%2FA; token=t.fZLXPGniB8d6q5YsVxWh; test=test"
@@ -64,6 +65,7 @@ def main():
     # Upload new tasks
     for i in challenges.keys():
         if i in existing_tasks:
+            print "Ignoring %s" % i
             continue
         # Create new task
         cdata = challenges[i]
@@ -95,6 +97,8 @@ def main():
         os += "Links:\n"
         for j in range(len(cdata['links'])):
             os += "%d. %s\n" % (j+1, cdata['links'][j])
+        os += "\n"
+        os += cdata['intro']
         os += "\n"
         p = create_pad("challenge%d" % chal_id, os)
         print os
